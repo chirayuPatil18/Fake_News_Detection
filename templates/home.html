@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Enter News</title>
+    <style>
+        body {
+            background: #eef2f7;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            width: 500px;
+            max-width: 90%;
+        }
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            resize: none;
+            font-size: 16px;
+        }
+        button {
+            margin-top: 20px;
+            background-color: #4caf50;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #43a047;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Enter the News Headline</h2>
+        <form action="/Check_for_news" method="post">
+            <textarea name="news" placeholder="Paste your news headline here..." required></textarea>
+            <br>
+            <button type="submit">Check News</button>
+        </form>
+    </div>
+</body>
+</html>

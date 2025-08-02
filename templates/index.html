@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fake News Detection</title>
+    <style>
+        body {
+            background: #f2f7ff;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .box {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .btn {
+            background-color: #4a90e2;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background-color: #3b78c3;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>Fake News Detection System</h1>
+        <p>Check whether a news headline is Real or Fake</p>
+        <a href="{{ url_for('home_page') }}" class="btn">Get Started</a>
+    </div>
+</body>
+</html>

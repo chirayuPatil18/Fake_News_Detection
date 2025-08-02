@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prediction Result</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f0f4f8;
+            padding: 30px;
+        }
+        .container {
+            background: white;
+            max-width: 800px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .section {
+            margin-top: 20px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        .alert-warning {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ffeeba;
+            margin-top: 20px;
+        }
+        .alert-high-confidence {
+            background-color: #fdecea;
+            color: #b71c1c;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #f5c6cb;
+            margin-top: 20px;
+        }
+        a {
+            color: #0077cc;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .back {
+            display: inline-block;
+            margin-top: 25px;
+            text-align: center;
+            padding: 10px 20px;
+            background: #4a90e2;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Prediction Result</h2>
+
+    <div class="section"><strong>News:</strong> {{ news }}</div>
+    <div class="section"><strong>Model Prediction:</strong> {{ prediction }}</div>
+
+    <div class="section">
+        <strong>Google Fact Check:</strong>
+        {% if fact_result|lower == "found" %}
+            Verified: <a href="{{ fact_link }}" target="_blank">Read article</a>
+        {% else %}
+            No match found on Google Fact Check.
+        {% endif %}
+    </div>
+
+    {% if fact_result|lower == "not found" %}
+        {% if matched_article %}
+        <div class="section">
+            <strong>Top Matched NewsAPI Article:</strong><br>
+            Title: {{ matched_article.title }}<br>
+            Source: {{ matched_article.source }}<br>
+            Published: {{ matched_article.published }}<br>
+            <a href="{{ matched_article.url }}" target="_blank">Read full article</a><br>
+            Similarity Score: {{ "%.2f"|format(similarity_score * 100) }}%
+        </div>
+        {% endif %}
+
+        {% if newsapi_results %}
+        <div class="section">
+            <strong>Other Related NewsAPI Articles:</strong><br>
+            <ul>
+                {% for article in newsapi_results %}
+                <li>
+                    <strong>{{ article.title }}</strong> ({{ article.source }}, {{ article.published }})<br>
+                    <em>{{ article.description }}</em><br>
+                    <a href="{{ article.url }}" target="_blank">Read more</a><br><br>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    {% endif %}
+
+    {% if show_general_warning %}
+    <div class="alert-warning">
+        <strong>The model's prediction could be wrong.</strong><br>
+        No articles found in Google Fact Check or NewsAPI. Please verify this news manually using trusted sources.
+    </div>
+    {% endif %}
+
+    {% if high_confidence_unverified %}
+    <div class="alert-high-confidence">
+        <strong>High Confidence Warning:</strong><br>
+        The model predicted this news as <strong>real</strong> with very high confidence, but there is <strong>no verification</strong> from trusted sources. Be cautious.
+    </div>
+    {% endif %}
+
+    <a href="{{ url_for('index') }}" class="back">🔁 Check Another News</a>
+</div>
+</body>
+</html>
