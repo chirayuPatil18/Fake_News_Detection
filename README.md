@@ -23,8 +23,9 @@ This project is a **Flask-based web application** that detects whether a given n
 
 ## 📊 Dataset Used
 
-- **WELFake_Dataset.csv**
-  - A dataset containing over **72,000 news articles**, labeled as real or fake
+- **WELFake_Dataset.csv & custom_fake_real_news_dataset.xls**
+  - A WELFake_Dataset containing over **72,000 news articles**, labeled as real or fake
+  - custom_fake_real_news_dataset contain the general news data which easily spread over social media (like whatsapp)
   - Contains fields like title, text, label, etc.
   - Source: [WELFake Dataset on Kaggle](https://www.kaggle.com/datasets/sootersaalu/real-and-fake-fake-news-dataset)
 
