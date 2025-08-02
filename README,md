@@ -1,0 +1,121 @@
+# 📰 Fake News Detection System
+
+This project is a **Flask-based web application** that detects whether a given news headline or short article is **Real** or **Fake** using a **Logistic Regression model** trained on the `WELFake_Dataset`. It also integrates with **Google Fact Check API** and **NewsAPI** to provide external validation for the model's prediction.
+
+---
+
+## 🚀 Features
+
+- Input a news headline or short article to classify as **Real** or **Fake**
+- Prediction confidence score shown (e.g., 92.4%)
+- Integration with:
+  - ✅ **Google Fact Check API** – to validate with trusted sources
+  - 📰 **NewsAPI** – to fetch real-time similar news articles
+- Shows **warnings** when the prediction is uncertain or when no external validation is found
+- Displays:
+  - Model prediction
+  - Confidence level
+  - Articles from NewsAPI
+  - Fact-check status from Google
+  - Fallback warning when validation fails
+
+---
+
+## 📊 Dataset Used
+
+- **WELFake_Dataset.csv**
+  - A dataset containing over **72,000 news articles**, labeled as real or fake
+  - Contains fields like title, text, label, etc.
+  - Source: [WELFake Dataset on Kaggle](https://www.kaggle.com/datasets/sootersaalu/real-and-fake-fake-news-dataset)
+
+---
+
+## 🧠 Model Details
+
+- **Model Used**: Stacking Method ({Base_Model:Multinomial Regression, Random Forest},{Meta_Model:Logistic Regression})
+- **Vectorizer**: TF-IDF
+- **Accuracy on test set**: ~96%
+- **File sizes**:
+  - Model: `new_model.joblib`
+  - Vectorizer: `new_vectorizer.joblib`
+
+---
+
+## 🛠 Technologies Used
+
+- Python
+- Flask
+- Scikit-learn
+- TF-IDF Vectorization
+- Google Fact Check API
+- NewsAPI
+- HTML/CSS (basic UI with alerts and article display)
+
+---
+
+## 🌐 External APIs Integrated
+
+### ✅ Google Fact Check API
+
+Used to verify if the entered news exists in Google's fact-checking index. This is crucial to catch **high-impact misinformation** even if the model classifies it wrongly.
+
+### 📰 NewsAPI
+
+Used to fetch **latest news articles** matching the user’s input. This gives the user context about how widely the news is covered and its sources.
+
+---
+
+## ⚠️ Limitations & Flaws
+
+Despite high accuracy, this system suffers from the following:
+
+### 1. **Model Generalization Issues**
+- Model shows **high confidence** on fake predictions when the headline is slightly ambiguous.
+- It was trained on older data (WELFake), which may not reflect **current events or writing styles**.
+
+### 2. **False Positives and False Negatives**
+- News like `India to launch 5G services across major cities` may get misclassified as fake or real **without proper justification**.
+
+### 3. **Dependency on Keywords**
+- TF-IDF heavily weighs word frequency, not **semantic meaning** or **context**, causing misclassification.
+
+### 4. **Poor performance on factual but rare news**
+- News that’s factual but not yet present in Google or NewsAPI is flagged as “Uncertain”.
+
+### 5. **No NLP context understanding**
+- No deep NLP model (like BERT or RoBERTa) is used. The model doesn’t understand sarcasm, satire, or subtle misinformation.
+
+---
+
+## 🔍 Example Scenarios
+
+| Input News | Model Prediction | Google Fact Check | NewsAPI | Final Action |
+|------------|------------------|-------------------|---------|--------------|
+| `India bans wheat exports amid inflation concerns` | ✅ Real | ❌ Not found | ✅ Articles found | Trusted |
+| `India to launch 5G services across major cities` | ❌ Fake | ❌ Not found | ❌ Not found | ⚠️ Warning shown |
+
+---
+
+## ✅ Recommendations for Improvement
+
+- Replace Logistic Regression + TF-IDF with **BERT**, **RoBERTa**, or similar Transformer models
+- Fine-tune on recent and diverse datasets (e.g., COVID, elections, etc.)
+- Use named entity recognition (NER) or factual consistency tools
+- Improve UI to better show uncertainty and reasoning
+- Deploy a system to continuously update the model with fresh data
+
+---
+
+## 📦 Running Locally
+
+```bash
+git clone https://github.com/chirayuPatil18/Fake_News_Detection.git
+cd Fake_News_Detection
+pip install -r requirements.txt
+python app.py
+
+📁 Note on Dataset
+Due to GitHub’s 100MB file limit, the dataset (WELFake_Dataset.csv) is excluded from this repository. You can download it manually from Kaggle and place it in the root folder.
+
+🛡 Disclaimer
+This project is for educational use only. Do not rely on this system for real-world fact-checking without further verification from trusted sources.
