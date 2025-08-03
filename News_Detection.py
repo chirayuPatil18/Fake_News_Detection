@@ -4,6 +4,11 @@ import requests
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 from datetime import datetime
+import os
+from dotenv import load_dotenv
+
+load_dotenv()  # Load variables from .env
+
 
 application = Flask(__name__)
 
@@ -12,8 +17,8 @@ stack_model = joblib.load("models/new_stack_model.joblib")
 vectorizer_model = joblib.load("models/new_vectorizer.joblib")
 
 # API Keys
-FACT_CHECK_API_KEY = "AIzaSyDhOWPEQeBbb-0VwW6ncozyaNbQdlXoDDA"
-NEWS_API_KEY = "8b0bba112f594fc2b5b98488845d722f"
+FACT_CHECK_API_KEY = os.getenv("FACT_CHECK_API_KEY")
+NEWS_API_KEY = os.getenv("NEWS_API_KEY")
 
 @application.route("/")
 def index():
